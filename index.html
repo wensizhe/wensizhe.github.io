@@ -1,90 +1,295 @@
 <!DOCTYPE html>
-<html lang="en-us">
+
+<html>
 
 <head>
-	<meta name="generator" content="Hugo 0.91.2" />
-  <meta charset="UTF-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
-
-<title>My New Hugo Site</title>
-
-
-<meta name="robots" content="index, follow" />
-<meta name="referrer" content="always" />
-
-
-<meta property="og:title" content="My New Hugo Site" />
-
-<meta property="og:url" content="https://wensizhe.github.io/" />
-
-
-
-
-
-
-
-<link rel="stylesheet" href="https://wensizhe.github.io/assets/css/split.css" type="text/css" media="screen" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-
-
-
-
-
-
-
-
+    <meta charset="utf-8">
+    <title>乌拉拉&羊咩咩</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=0.8, maximum-scale=1.1">
+    <meta http-equiv="Cache-Control" content="no-transform" />
 </head>
 
-<body id="fullsingle" class="page-template-page-fullsingle-split">
+<body>
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            background: #ffe;
+            font-size: 14px;
+            font-family: '微软雅黑', '宋体', sans-serif;
+            color: #231F20;
+            overflow: auto
+        }
 
-  <div class="fs-split">
+        a {
+            color: #000;
+            font-size: 14px;
+        }
 
-    
-    
+        #wrap {
+            position: relative;
+            margin: 0 auto;
+            width: 1100px;
+            height: 680px;
+            margin-top: 10px;
+        }
 
-    
-    <div class="split-content">
-      <div class="split-content-vertically-center">
-        
-        <div class="split-intro">
-  <h1>Hoo</h1>
-  <h2 class="tagline">深圳金领第一名</h2>
-</div>
+        #text {
+            width: 450px;
+            height: 425px;
+            left: 45px;
+            top: 80px;
+            position: absolute;
+        }
 
+        #code {
+            display: none;
+            font-size: 18px;
+        }
 
-        
-        
-  
-  <div class="split-bio">
-  
-</div>
+        #clock-box {
+            position: absolute;
+            left: 60px;
+            top: 600px;
+            font-size: 18px;
+            display: none;
+        }
 
+        #clock-box a {
+            font-size: 18px;
+            text-decoration: none;
+        }
 
-  
-  <div class="split-lists">
+        #clock {
+            margin-left: 28px;
+        }
 
-  
+        #clock .digit {
+            font-size: 32px;
+        }
 
-</div>
+        #canvas {
+            margin: 0 auto;
+            width: 1100px;
+            height: 680px;
+        }
 
+        .hand {
+            cursor: pointer;
+        }
 
+        .say {
+            margin-left: 5px;
+            line-height: 1.8;
+        }
 
-        
-        <div class="split-credit">
-  <p> - <a href="https://onepagelove.com/split" title="Split Template">Split Template</a> by <a href="https://onepagelove.com" title="One Page Love">One Page Love</a></p>
+        .space {
+            margin-right: 150px;
+        }
+    </style>
 
-  <!--
-  To edit this credit you can remove the CC3.0 license for only $5 here: https://onepagelove.com/split
-  this really helps contribute towards us developing more templates and means the world to me!
-  Cheers, Rob (@robhope)
-  -->
-</div>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="functions.js"></script>
+    <script type="text/javascript" src="love.js"></script>
+    <audio id="audio" autoplay="autopaly" loop="loop">
+        <source type="audio/mp3" />
+    </audio>
 
-      </div>
+    <div style="width: 100%">
+        <div id="wrap">
+            <div id="text">
+                <div id="code">
+                    <span class="say" style="color: #003f64">温柔美丽的杨太：</span><br>
+                    <p><span></span></p>
+                    <span class="say" style="color: #ff3500;">❤️感恩有你❤️</span><br>
+                    <span class="say" style="color: #178ccf">柴米</span><br>
+                    <span class="say" style="color: #ff00ff">油盐</span><br>
+                    <span class="say" style="color: #ff0000">酱醋茶</span><br>
+                    <span class="say" style="color: #08a522">❤️❤️❤️</span><br>
+                    <span class="say" style="color: #0092e7">琴棋</span><br>
+                    <span class="say" style="color: #c300ff">书画</span><br>
+                    <span class="say" style="color: #ff7300">诗酒花</span><br>
+                    <span class="say" style="color: #ff3500">❤️❤️❤️</span><br>
+                    <p><span></span></p>
+                    <span class="say" style="color: #003f64"><span class="space"></span>-- 杨先生 --</span>
+                </div>
+            </div>
+
+            <div id="clock-box">
+                <span class="STYLE1"></span>
+                <span style="color: #8a1b0c">从2020年10月10日晚上23点到现在</span>
+                <span class="STYLE1">已经……</span>
+                <div id="clock"></div>
+            </div>
+
+            <canvas id="canvas" width="1100" height="680"></canvas>
+        </div>
     </div>
 
-  </div>
+    <script type="text/javascript">
+        var canvas = $('#canvas');
+        var width = canvas.width();
+        var height = canvas.height();
+        canvas.attr("width", width);
+        canvas.attr("height", height);
+
+        var opts = {
+            seed: {
+                x: width / 2 - 20,
+                color: "#ce2020",
+                scale: 2
+            },
+
+            branch: [
+                [535, 680, 570, 250, 500, 200, 30, 100, [
+                    [540, 500, 455, 417, 340, 400, 13, 100, [
+                        [450, 435, 434, 430, 394, 395, 2, 40]
+                    ]],
+
+                    [550, 445, 600, 356, 680, 345, 12, 100, [
+                        [578, 400, 648, 409, 661, 426, 3, 80]
+                    ]],
+
+                    [539, 281, 537, 248, 534, 217, 3, 40],
+
+                    [546, 397, 413, 247, 328, 244, 9, 80, [
+                        [427, 286, 383, 253, 371, 205, 2, 40],
+                        [498, 345, 435, 315, 395, 330, 4, 60]
+                    ]],
+
+                    [546, 357, 608, 252, 678, 221, 6, 100, [
+                        [590, 293, 646, 277, 648, 271, 2, 80]
+                    ]]
+                ]]
+            ],
+
+            bloom: {
+                num: 700,
+                width: 1080,
+                height: 650,
+            },
+
+            footer: {
+                width: 1200,
+                height: 5,
+                speed: 10,
+            }
+        }
+
+        var tree = new Tree(canvas[0], width, height, opts);
+        var seed = tree.seed;
+        var foot = tree.footer;
+        var hold = 1;
+
+        canvas.click(function (e) {
+            var offset = canvas.offset();
+            var x = e.pageX - offset.left;
+            var y = e.pageY - offset.top;
+
+            if (seed.hover(x, y)) {
+                hold = 0;
+                canvas.unbind("click");
+                canvas.unbind("mousemove");
+                canvas.removeClass('hand');
+                playAutio();
+                console.log(123)
+            }
+        }).mousemove(function (e) {
+            var offset = canvas.offset();
+            var x = e.pageX - offset.left;
+            var y = e.pageY - offset.top;
+            canvas.toggleClass('hand', seed.hover(x, y));
+        });
+
+        function playAutio() {
+            var el = document.getElementById('audio');
+            el.src = './3、新人入场 感激遇到你-胡杏儿、黄宗泽.mp3';
+            el.play();
+        }
+
+        function sleep(ms) {
+            return new Promise(function(resolve) {
+                setTimeout(resolve, ms);
+            });
+        }
+
+        async function seedAnimate() {
+            seed.draw();
+            while (hold) {
+                await sleep(10);
+            }
+
+            while (seed.canScale()) {
+                seed.scale(0.95);
+                await sleep(10);
+            }
+
+            while (seed.canMove()) {
+                seed.move(0, 2);
+                foot.draw();
+                await sleep(10);
+            }
+        }
+
+        async function growAnimate() {
+            do {
+                tree.grow();
+                await sleep(10);
+            } while (tree.canGrow());
+        }
+
+        async function flowAnimate() {
+            do {
+                tree.flower(2);
+                await sleep(10);
+            } while (tree.canFlower());
+        }
+
+        async function moveAnimate() {
+            tree.snapshot("p1", 240, 0, 610, 680);
+            while (tree.move("p1", 500, 0)) {
+                foot.draw();
+                await sleep(10);
+            }
+            foot.draw();
+            tree.snapshot("p2", 500, 0, 610, 680);
+            canvas.parent().css("background", "url(" + tree.toDataURL('image/png') + ")");
+            canvas.css("background", "#ffe");
+            await sleep(300);
+            canvas.css("background", "none");
+        }
+
+        async function jumpAnimate() {
+            while (true) {
+                tree.ctx.clearRect(0, 0, width, height);
+                tree.jump();
+                foot.draw();
+                await sleep(25);
+            }
+        }
+
+        function textAnimate() {
+            var together = new Date('2020-10-10 23:00:00');
+            $("#code").show().typewriter();
+            $("#clock-box").fadeIn(500);
+
+            setInterval(function() {
+                timeElapse(together);
+            }, 1000);
+        }
+
+        async function runAsync() {
+            await seedAnimate();
+            await growAnimate();
+            await flowAnimate();
+            await moveAnimate();
+            textAnimate();
+            await jumpAnimate();
+        }
+
+        runAsync();
+    </script>
 
 </body>
+
 </html>
